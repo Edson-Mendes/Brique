@@ -1,0 +1,18 @@
+# port
+server:
+  port: 8880
+
+spring:
+  application:
+    name: product
+
+  # datasource
+  datasource:
+    url: jdbc:postgresql://localhost:5432/brique-product-db
+    username: user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  # jpa
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
