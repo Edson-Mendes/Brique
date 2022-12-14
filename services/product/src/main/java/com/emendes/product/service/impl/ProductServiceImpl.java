@@ -1,25 +1,30 @@
 package com.emendes.product.service.impl;
 
 import com.emendes.product.dto.response.ProductResponse;
+import com.emendes.product.mapper.ProductMapper;
+import com.emendes.product.model.entity.Product;
+import com.emendes.product.repository.ProductRepository;
 import com.emendes.product.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
 
+  private final ProductRepository productRepository;
+  private final ProductMapper mapper;
+
   @Override
   public Page<ProductResponse> fetchAll(Pageable pageable) {
-    ProductResponse productResponse = ProductResponse.builder()
-        .name("Arranhador para gatos")
-        .description("Arranhador em ótimo estado, pouco uso.")
-        .build();
+    Page<Product> productsPage = productRepository.findAll(pageable);
+    log.info("fetching page of products");
 
-    return new PageImpl<>(List.of(productResponse), pageable, 1);
+    return productsPage.map(mapper::toProductResponse);
   }
 
 }

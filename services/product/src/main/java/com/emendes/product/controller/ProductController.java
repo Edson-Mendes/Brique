@@ -20,7 +20,7 @@ public class ProductController {
   private final ProductService productService;
 
   @GetMapping
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ResponseStatus(HttpStatus.OK)
   public Page<ProductResponse> fetchAll(@PageableDefault Pageable pageable) {
     return productService.fetchAll(pageable);
   }
