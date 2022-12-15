@@ -12,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -31,6 +34,8 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public ProductResponse save(ProductRequest productRequest) {
     Product product = mapper.toProduct(productRequest);
+    product.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+
     productRepository.save(product);
     log.info("product {} saved", product.getId());
 
