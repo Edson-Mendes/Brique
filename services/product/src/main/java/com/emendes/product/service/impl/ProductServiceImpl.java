@@ -1,5 +1,6 @@
 package com.emendes.product.service.impl;
 
+import com.emendes.product.dto.request.ProductRequest;
 import com.emendes.product.dto.response.ProductResponse;
 import com.emendes.product.mapper.ProductMapper;
 import com.emendes.product.model.entity.Product;
@@ -25,6 +26,15 @@ public class ProductServiceImpl implements ProductService {
     log.info("fetching page of products");
 
     return productsPage.map(mapper::toProductResponse);
+  }
+
+  @Override
+  public ProductResponse save(ProductRequest productRequest) {
+    Product product = mapper.toProduct(productRequest);
+    productRepository.save(product);
+    log.info("product {} saved", product.getId());
+
+    return mapper.toProductResponse(product);
   }
 
 }
