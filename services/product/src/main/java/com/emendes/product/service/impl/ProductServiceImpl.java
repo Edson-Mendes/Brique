@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     product.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
     productRepository.save(product);
-    log.info("product {} saved", product.getId());
+    log.info("product with id {} was saved", product.getId());
 
     return mapper.toProductResponse(product);
   }
@@ -47,6 +46,13 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public ProductResponse find(Long id) {
     return mapper.toProductResponse(findById(id));
+  }
+
+  @Override
+  public void delete(Long id) {
+    Product product = findById(id);
+    productRepository.delete(product);
+    log.info("product with id {} was deleted", product.getId());
   }
 
   private Product findById(Long id) {
