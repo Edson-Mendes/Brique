@@ -11,4 +11,6 @@ public interface ProductService {
 
   ProductResponse save(ProductRequest productRequest);
 
+  ProductResponse find(Long id);
+
 }

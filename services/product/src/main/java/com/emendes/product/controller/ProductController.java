@@ -31,4 +31,10 @@ public class ProductController {
     return productService.save(productRequest);
   }
 
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductResponse findById(@PathVariable(name = "id") Long id) {
+    return productService.find(id);
+  }
+
 }
