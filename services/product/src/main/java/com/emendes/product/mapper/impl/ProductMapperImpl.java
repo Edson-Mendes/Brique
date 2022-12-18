@@ -24,4 +24,9 @@ public class ProductMapperImpl implements ProductMapper {
     return mapper.map(productRequest, Product.class);
   }
 
+  @Override
+  public void merge(ProductRequest source, Product destination) {
+    mapper.map(source, destination);
+  }
+
 }

@@ -67,4 +67,31 @@ class ProductMapperImplTest {
     Assertions.assertThat(actualProduct.getPrice()).isNotNull().isEqualTo("250.00");
   }
 
+  @Test
+  @DisplayName("merge must merge ProductRequest into Product when merge successfully")
+  void merge_MustMergeProductRequestIntoProduct_WhenMergeSuccessfully() {
+    ProductRequest productRequestSource = ProductRequest.builder()
+        .name("Arranhador Lorem Ipsum updated")
+        .description("description lorem ipsum updated")
+        .price(new BigDecimal("250.00"))
+        .build();
+
+    Product productDestination = Product.builder()
+        .id(100L)
+        .name("Arranhador Lorem Ipsum")
+        .description("description lorem ipsum")
+        .price(new BigDecimal("250.00"))
+        .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
+        .build();
+
+    productMapper.merge(productRequestSource, productDestination);
+
+    Assertions.assertThat(productDestination).isNotNull();
+    Assertions.assertThat(productDestination.getId()).isEqualTo(100L);
+    Assertions.assertThat(productDestination.getName()).isEqualTo("Arranhador Lorem Ipsum updated");
+    Assertions.assertThat(productDestination.getDescription()).isEqualTo("description lorem ipsum updated");
+    Assertions.assertThat(productDestination.getPrice()).isEqualTo(new BigDecimal("250.00"));
+    Assertions.assertThat(productDestination.getCreatedAt()).isEqualTo("2022-12-10T10:00:00");
+  }
+
 }

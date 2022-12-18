@@ -10,4 +10,6 @@ public interface ProductMapper {
 
   Product toProduct(ProductRequest productRequest);
 
+  void merge(ProductRequest source, Product destination);
+
 }
