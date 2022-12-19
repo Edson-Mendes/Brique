@@ -33,8 +33,48 @@ class ProductServiceImplTest {
   @Mock
   private ProductMapper mapperMock;
 
+
   @Nested
-  @DisplayName("Tests for find method")
+  @DisplayName("Unit tests for save method")
+  class SaveMethod {
+
+    @Test
+    @DisplayName("save must return ProductResponse when save successfully")
+    void save_MustReturnProductResponse_WhenSaveSuccessfully() {
+      Product productWithoutIdCreatedAt = Product.builder()
+          .name("Arranhador Lorem Ipsum")
+          .description("Descrição Dolor Sit")
+          .price(new BigDecimal("200.00"))
+          .build();
+      BDDMockito.when(mapperMock.toProduct(ArgumentMatchers.any())).thenReturn(productWithoutIdCreatedAt);
+      BDDMockito.when(productRepositoryMock.save(ArgumentMatchers.any())).thenReturn(product());
+      BDDMockito.when(mapperMock.toProductResponse(ArgumentMatchers.any())).thenReturn(productResponse());
+
+      ProductRequest productRequest = ProductRequest.builder()
+          .name("Arranhador Lorem Ipsum")
+          .description("Descrição Dolor Sit")
+          .price(new BigDecimal("200.00"))
+          .build();
+
+      ProductResponse actualProductResponse = productService.save(productRequest);
+      BDDMockito.verify(mapperMock).toProduct(ArgumentMatchers.any());
+      BDDMockito.verify(productRepositoryMock).save(ArgumentMatchers.any());
+      BDDMockito.verify(mapperMock).toProductResponse(ArgumentMatchers.any());
+
+      ProductResponse expectedProductResponse = ProductResponse.builder()
+          .id(1000L)
+          .name("Arranhador Lorem Ipsum")
+          .description("Descrição Dolor Sit")
+          .price(new BigDecimal("200.00"))
+          .build();
+
+      Assertions.assertThat(actualProductResponse).isNotNull().isEqualTo(expectedProductResponse);
+    }
+
+  }
+
+  @Nested
+  @DisplayName("Unit tests for find method")
   class FindMethod {
 
     @Test
@@ -69,7 +109,7 @@ class ProductServiceImplTest {
   }
 
   @Nested
-  @DisplayName("Tests for update method")
+  @DisplayName("Unit tests for update method")
   class UpdateMethod {
 
     @Test
@@ -116,6 +156,41 @@ class ProductServiceImplTest {
 
   }
 
+  @Nested
+  @DisplayName("Unit tests for delete method")
+  class DeleteMethod {
+
+    @Test
+    @DisplayName("delete must call productRepository.delete when delete successfully")
+    void delete_MustCallProductRepositoryDelete_WhenUpdateSuccessfully() {
+      BDDMockito.when(productRepositoryMock.findById(1000L)).thenReturn(optionalProduct());
+
+      productService.delete(1000L);
+      BDDMockito.verify(productRepositoryMock).delete(ArgumentMatchers.any());
+
+    }
+
+    @Test
+    @DisplayName("delete must throw ProductNotFoundException when product does not exist")
+    void delete_MustThrowProductNotFoundException_WhenProductDoesNotExist() {
+//      Não é necessário mockar o comportamento do productRepository.findById pois o valor default é empty optional.
+      Assertions.assertThatExceptionOfType(ProductNotFoundException.class)
+          .isThrownBy(() -> productService.delete(9999L))
+          .withMessage("Product not found for id 9999");
+    }
+
+  }
+
+  private Product product() {
+    return  Product.builder()
+        .id(1000L)
+        .name("Arranhador Lorem Ipsum")
+        .description("Descrição Dolor Sit")
+        .price(new BigDecimal("200.00"))
+        .createdAt(LocalDateTime.parse("2022-12-19T10:00:00"))
+        .build();
+  }
+
   private ProductResponse productResponse() {
     return ProductResponse.builder()
         .id(1000L)
@@ -135,15 +210,7 @@ class ProductServiceImplTest {
   }
 
   private Optional<Product> optionalProduct() {
-    Product product = Product.builder()
-        .id(1000L)
-        .name("Arranhador Lorem Ipsum")
-        .description("Descrição Dolor Sit")
-        .price(new BigDecimal("200.00"))
-        .createdAt(LocalDateTime.parse("2022-12-19T10:00:00"))
-        .build();
-
-    return Optional.of(product);
+    return Optional.of(product());
   }
 
 }
