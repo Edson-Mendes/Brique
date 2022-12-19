@@ -37,6 +37,12 @@ public class ProductController {
     return productService.find(id);
   }
 
+  @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductResponse update(@PathVariable(name = "id") Long id, @RequestBody @Valid ProductRequest productRequest) {
+    return productService.update(id, productRequest);
+  }
+
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   void deleteById(@PathVariable(name = "id") Long id) {

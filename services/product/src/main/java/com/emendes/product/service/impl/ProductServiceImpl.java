@@ -49,6 +49,18 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public ProductResponse update(Long id, ProductRequest productRequest) {
+    Product productToBeUpdated = findById(id);
+
+    mapper.merge(productRequest, productToBeUpdated);
+    productRepository.save(productToBeUpdated);
+
+    log.info("Product with id {} was updated", productToBeUpdated.getId());
+
+    return mapper.toProductResponse(productToBeUpdated);
+  }
+
+  @Override
   public void delete(Long id) {
     Product product = findById(id);
     productRepository.delete(product);
