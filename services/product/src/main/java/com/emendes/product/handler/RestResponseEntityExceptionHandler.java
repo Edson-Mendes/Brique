@@ -2,9 +2,14 @@ package com.emendes.product.handler;
 
 import com.emendes.product.dto.response.ErrorDetails;
 import com.emendes.product.exception.ResourceNotFoundException;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,4 +34,17 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
   }
 
+  @Override
+  protected ResponseEntity<Object> handleTypeMismatch(
+      TypeMismatchException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    ErrorDetails errorDetails = ErrorDetails.builder()
+        .error("Type Mismatch")
+        .message(exception.getMessage())
+        .status(status.value())
+        .timestamp(LocalDateTime.now())
+        .path(((ServletWebRequest) request).getRequest().getRequestURI())
+        .build();
+
+    return ResponseEntity.status(status).body(errorDetails);
+  }
 }
