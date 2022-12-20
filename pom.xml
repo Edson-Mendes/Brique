@@ -17,6 +17,7 @@
 
   <modules>
     <module>services/product</module>
+    <module>services/offer</module>
   </modules>
 
   <properties>
