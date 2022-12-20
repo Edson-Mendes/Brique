@@ -16,10 +16,15 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -33,6 +38,27 @@ class ProductServiceImplTest {
   @Mock
   private ProductMapper mapperMock;
 
+  private final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 10);
+
+  @Nested
+  @DisplayName("Unit tests for fetchAll method")
+  class FetchAllMethod {
+
+    @Test
+    @DisplayName("fetchAll must return Page<ProductResponse> when fetch successfully")
+    void fetchAll_MustReturnPageProductResponse_WhenFetchSuccessfully() {
+      BDDMockito.when(productRepositoryMock.findAll(DEFAULT_PAGEABLE)).thenReturn(pageProduct());
+      BDDMockito.when(mapperMock.toProductResponse(ArgumentMatchers.any())).thenReturn(productResponse());
+
+      Page<ProductResponse> actualPageProductResponse = productService.fetchAll(DEFAULT_PAGEABLE);
+
+      BDDMockito.verify(productRepositoryMock).findAll(DEFAULT_PAGEABLE);
+      BDDMockito.verify(mapperMock).toProductResponse(ArgumentMatchers.any());
+
+      Assertions.assertThat(actualPageProductResponse).isNotNull().hasSize(1);
+    }
+
+  }
 
   @Nested
   @DisplayName("Unit tests for save method")
@@ -182,7 +208,7 @@ class ProductServiceImplTest {
   }
 
   private Product product() {
-    return  Product.builder()
+    return Product.builder()
         .id(1000L)
         .name("Arranhador Lorem Ipsum")
         .description("Descrição Dolor Sit")
@@ -211,6 +237,11 @@ class ProductServiceImplTest {
 
   private Optional<Product> optionalProduct() {
     return Optional.of(product());
+  }
+
+  private Page<Product> pageProduct() {
+    List<Product> listProduct = List.of(product());
+    return new PageImpl<>(listProduct, DEFAULT_PAGEABLE, 1);
   }
 
 }
