@@ -42,6 +42,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   @Override
   protected ResponseEntity<Object> handleTypeMismatch(
       TypeMismatchException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
+//    TODO: Talvez adicionar um message resolver para devolver uma mensagem 'amigavel'.
     ErrorDetails errorDetails = ErrorDetails.builder()
         .title("Type Mismatch")
         .message(exception.getMessage())
