@@ -61,7 +61,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     String errors = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining("; "));
 
     ValidationErrorDetails errorDetails = ValidationErrorDetails.builder()
-        .title("Type Mismatch")
+        .title("Bad Request")
         .message("Invalid field(s)")
         .status(status.value())
         .timestamp(LocalDateTime.now())
