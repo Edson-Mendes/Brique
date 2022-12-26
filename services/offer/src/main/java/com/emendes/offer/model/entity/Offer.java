@@ -23,6 +23,8 @@ public class Offer {
   @Column(nullable = false)
   private String status;
   @Column(nullable = false)
+  private Long productId;
+  @Column(nullable = false)
   private LocalDateTime createdAt;
 
 }

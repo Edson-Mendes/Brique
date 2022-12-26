@@ -1,0 +1,1 @@
+ALTER TABLE t_offer ADD COLUMN product_id bigint NOT NULL AFTER status;
