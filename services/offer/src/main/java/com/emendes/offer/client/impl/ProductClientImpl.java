@@ -25,10 +25,8 @@ public class ProductClientImpl implements ProductClient {
 
     Mono<ProductResponse> response = client.get().uri(uri)
         .accept(MediaType.APPLICATION_JSON).acceptCharset(StandardCharsets.UTF_8).retrieve()
-//        .onStatus(HttpStatus.NOT_FOUND::equals, r -> r.bodyToMono(String.class).map(RuntimeException::new))
-        .onStatus(HttpStatus.NOT_FOUND::equals, r -> {
-          return Mono.error(new InvalidOfferException("The specified product was not found", HttpStatus.BAD_REQUEST));
-        })
+        .onStatus(HttpStatus.NOT_FOUND::equals,
+            r -> Mono.error(new InvalidOfferException("The specified product was not found", HttpStatus.BAD_REQUEST)))
         .bodyToMono(ProductResponse.class);
     return response.block();
   }

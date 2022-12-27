@@ -15,5 +15,6 @@ public class OfferResponse {
   private Long id;
   private BigDecimal value;
   private String status;
+  private Long productId;
 
 }

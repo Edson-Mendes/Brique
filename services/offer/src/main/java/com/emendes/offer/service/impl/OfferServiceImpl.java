@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
@@ -26,14 +29,9 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public OfferResponse save(OfferRequest offerRequest) {
     ProductResponse product = productClient.findProduct(offerRequest.getProductId());
-    log.info("product exists! {}", product.toString());
-
     Offer offer = mapper.toOffer(offerRequest);
-
-    log.info("Offer ::: id={}, productId={}", offer.getId(), offer.getProductId());
-
+    offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     offerRepository.save(offer);
-
     log.info("offer with id {} was saved", offer.getId());
 
     return mapper.toOfferResponse(offer);

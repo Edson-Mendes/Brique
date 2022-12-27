@@ -29,6 +29,7 @@ class OfferMapperImplTest {
   void toOffer_MustReturnOffer_WhenMapSuccessfully() {
     OfferRequest offerRequestToBeMapped = OfferRequest.builder()
         .value(new BigDecimal("250.00"))
+        .productId(999L)
         .status("WAITING")
         .build();
 
@@ -38,6 +39,7 @@ class OfferMapperImplTest {
     Assertions.assertThat(actualOffer.getId()).isNull();
     Assertions.assertThat(actualOffer.getCreatedAt()).isNull();
     Assertions.assertThat(actualOffer.getValue()).isNotNull().isEqualTo("250.00");
+    Assertions.assertThat(actualOffer.getProductId()).isNotNull().isEqualTo(999L);
     Assertions.assertThat(actualOffer.getStatus()).isNotNull().isEqualTo("WAITING");
   }
 
@@ -48,6 +50,7 @@ class OfferMapperImplTest {
         .id(100000L)
         .value(new BigDecimal("250.00"))
         .status("WAITING")
+        .productId(999L)
         .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
         .build();
 
@@ -55,12 +58,11 @@ class OfferMapperImplTest {
     OfferResponse expectedOfferResponse = OfferResponse.builder()
         .id(100000L)
         .value(new BigDecimal("250.00"))
+        .productId(999L)
         .status("WAITING")
         .build();
 
-    Assertions.assertThat(actualOfferResponse)
-        .isNotNull()
-        .isEqualTo(expectedOfferResponse);
+    Assertions.assertThat(actualOfferResponse).isNotNull().isEqualTo(expectedOfferResponse);
   }
 
 }
