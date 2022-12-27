@@ -13,5 +13,6 @@ public class OfferRequest {
 
   private BigDecimal value;
   private String status;
+  private Long productId;
 
 }

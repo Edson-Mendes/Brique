@@ -1,5 +1,7 @@
 package com.emendes.offer.service.impl;
 
+import com.emendes.offer.client.ProductClient;
+import com.emendes.offer.client.response.ProductResponse;
 import com.emendes.offer.dto.request.OfferRequest;
 import com.emendes.offer.dto.response.OfferResponse;
 import com.emendes.offer.mapper.OfferMapper;
@@ -18,12 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class OfferServiceImpl implements OfferService {
 
   private final OfferRepository offerRepository;
+  private final ProductClient productClient;
   private final OfferMapper mapper;
 
   @Override
   public OfferResponse save(OfferRequest offerRequest) {
+    ProductResponse product = productClient.findProduct(offerRequest.getProductId());
+    log.info("product exists! {}", product.toString());
+
     Offer offer = mapper.toOffer(offerRequest);
-    offerRepository.save(offer);
+
+    log.info("Offer ::: productId={}", offer.getProductId());
+
+//    offerRepository.save(offer);
+    offer.setId(1000L);
     log.info("offer with id {} was saved", offer.getId());
 
     return mapper.toOfferResponse(offer);
