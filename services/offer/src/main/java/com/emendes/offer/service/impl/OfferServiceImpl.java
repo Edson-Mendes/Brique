@@ -30,10 +30,10 @@ public class OfferServiceImpl implements OfferService {
 
     Offer offer = mapper.toOffer(offerRequest);
 
-    log.info("Offer ::: productId={}", offer.getProductId());
+    log.info("Offer ::: id={}, productId={}", offer.getId(), offer.getProductId());
 
-//    offerRepository.save(offer);
-    offer.setId(1000L);
+    offerRepository.save(offer);
+
     log.info("offer with id {} was saved", offer.getId());
 
     return mapper.toOfferResponse(offer);
