@@ -247,7 +247,7 @@ class ProductRequestTest {
     @ParameterizedTest
     @ValueSource(strings = {"99999999.99", "0.001"})
     @DisplayName("Validate price must return violations when the number of digits is invalid")
-    void validatePrice_MustReturnViolations_WhenPriceSizeIsBiggerThan50Characters(String invalidPrice) {
+    void validatePrice_MustReturnViolations_WhenTheNumberOfDigitsIsInvalid(String invalidPrice) {
       ProductRequest productRequest = ProductRequest.builder()
           .name(VALID_NAME)
           .description(VALID_DESCRIPTION)

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/offers")
@@ -16,7 +18,7 @@ public class OfferController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public OfferResponse makeOffer(@RequestBody OfferRequest offerRequest) {
+  public OfferResponse makeOffer(@RequestBody @Valid OfferRequest offerRequest) {
     return offerService.save(offerRequest);
   }
 

@@ -30,7 +30,6 @@ class OfferMapperImplTest {
     OfferRequest offerRequestToBeMapped = OfferRequest.builder()
         .value(new BigDecimal("250.00"))
         .productId(999L)
-        .status("WAITING")
         .build();
 
     Offer actualOffer = offerMapper.toOffer(offerRequestToBeMapped);
@@ -38,9 +37,9 @@ class OfferMapperImplTest {
     Assertions.assertThat(actualOffer).isNotNull();
     Assertions.assertThat(actualOffer.getId()).isNull();
     Assertions.assertThat(actualOffer.getCreatedAt()).isNull();
+    Assertions.assertThat(actualOffer.getStatus()).isNull();
     Assertions.assertThat(actualOffer.getValue()).isNotNull().isEqualTo("250.00");
     Assertions.assertThat(actualOffer.getProductId()).isNotNull().isEqualTo(999L);
-    Assertions.assertThat(actualOffer.getStatus()).isNotNull().isEqualTo("WAITING");
   }
 
   @Test

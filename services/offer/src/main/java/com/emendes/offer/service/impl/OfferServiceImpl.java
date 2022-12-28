@@ -31,6 +31,7 @@ public class OfferServiceImpl implements OfferService {
     ProductResponse product = productClient.findProduct(offerRequest.getProductId());
     Offer offer = mapper.toOffer(offerRequest);
     offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+    offer.setStatus("WAITING");
     offerRepository.save(offer);
     log.info("offer with id {} was saved", offer.getId());
 

@@ -48,7 +48,6 @@ class OfferServiceImplTest {
 
       OfferRequest offerRequest = OfferRequest.builder()
           .value(new BigDecimal("250.00"))
-          .status("WAITING")
           .build();
 
       OfferResponse actualOfferResponse = offerService.save(offerRequest);
