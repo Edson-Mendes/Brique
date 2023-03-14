@@ -1,6 +1,5 @@
 package com.emendes.offer.service.impl;
 
-import com.emendes.offer.client.response.ProductResponse;
 import com.emendes.offer.dto.request.OfferRequest;
 import com.emendes.offer.dto.response.OfferResponse;
 import com.emendes.offer.mapper.OfferMapper;
@@ -28,7 +27,7 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public OfferResponse save(OfferRequest offerRequest) {
-    productService.verifyDisponibility(offerRequest.getProductId());
+    productService.verifyAvailability(offerRequest.getProductId());
     Offer offer = mapper.toOffer(offerRequest);
     offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     offer.setStatus("WAITING");

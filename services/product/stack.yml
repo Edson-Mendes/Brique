@@ -1,3 +1,4 @@
+# TODO: Usar H2 para o ambiente de desenvolvimento.
 version: '3.1'
 
 services:

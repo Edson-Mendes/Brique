@@ -12,7 +12,7 @@ public class ProductServiceImpl implements ProductService {
   private final ProductClient productClient;
 
   @Override
-  public void verifyDisponibility(Long id) {
+  public void verifyAvailability(Long id) {
     productClient.findProduct(id);
   }
 

@@ -6,4 +6,4 @@
 
 ## :book: Resumo do projeto
 Aplicação onde os usuários poderão comprar ou vender todo tipo de coisa, como roupas usadas, antiguidades, artesanato etc. 
-Estou desenvolvendo este projeto com a finalidade de estudar/praticar arquitetura de microsserviços. 
+Estou desenvolvendo este projeto com a finalidade de estudar/praticar arquitetura de microsserviços.

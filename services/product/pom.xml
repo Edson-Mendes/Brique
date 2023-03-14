@@ -9,18 +9,13 @@
 	</parent>
 
 	<artifactId>product</artifactId>
-	<name>product</name>
+	<name>product-service</name>
 	<description>Serviço que lidará com toda a parte de produtos da aplicação</description>
-
-	<properties>
-		
-	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 	</dependencies>
 

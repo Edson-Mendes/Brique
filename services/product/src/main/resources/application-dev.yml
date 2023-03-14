@@ -1,27 +1,37 @@
 # port
 server:
-  port: 8880
+  port: 8580
 
 spring:
   application:
-    name: product
+    name: product-service
 
   # datasource
   datasource:
-    url: jdbc:postgresql://localhost:5432/brique-product-db
-    username: user
-    password: 1234
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:product-db
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   # jpa
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: validate
-      show-sql: true
-      properties:
-        hibernate:
-          format-sql: true
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+  # H2
+  h2:
+    console:
+      enabled: true
+
+  # Flyway
+  flyway:
+    enabled: false
 
 # log
 logging:
