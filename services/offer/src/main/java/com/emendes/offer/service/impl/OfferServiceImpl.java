@@ -27,12 +27,16 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public OfferResponse save(OfferRequest offerRequest) {
-    productService.verifyAvailability(offerRequest.getProductId());
+    productService.isAvailable(offerRequest.getProductId());
+
     Offer offer = mapper.toOffer(offerRequest);
     offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     offer.setStatus("WAITING");
+
     offerRepository.save(offer);
+
     log.info("offer with id {} was saved", offer.getId());
+    // TODO: Enviar uma notificação ao dono do produto informando que ele recebeu uma oferta pelo produto
 
     return mapper.toOfferResponse(offer);
   }

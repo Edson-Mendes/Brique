@@ -1,4 +1,4 @@
-package com.emendes.product.dto.response;
+package com.emendes.offer.dto.response;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
-public class ErrorDetails {
+public class ProblemDetail {
 
   private String title;
-  private String message;
+  private String detail;
   private int status;
   private LocalDateTime timestamp;
   private String path;

@@ -1,7 +1,7 @@
 package com.emendes.product.handler;
 
-import com.emendes.product.dto.response.ErrorDetails;
-import com.emendes.product.dto.response.ValidationErrorDetails;
+import com.emendes.product.dto.response.ProblemDetail;
+import com.emendes.product.dto.response.ValidationProblemDetail;
 import com.emendes.product.exception.ResourceNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -24,18 +24,18 @@ import java.util.stream.Collectors;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<ErrorDetails> handleResourceNotFoundException(
+  public ResponseEntity<ProblemDetail> handleResourceNotFoundException(
       ResourceNotFoundException exception, HttpServletRequest request) {
 
-    ErrorDetails errorDetails = ErrorDetails.builder()
+    ProblemDetail problemDetail = ProblemDetail.builder()
         .title("Resource not found")
-        .message(exception.getMessage())
+        .detail(exception.getMessage())
         .status(exception.getHttpStatus().value())
         .timestamp(LocalDateTime.now())
         .path(request.getRequestURI())
         .build();
 
-    return ResponseEntity.status(exception.getHttpStatus()).body(errorDetails);
+    return ResponseEntity.status(exception.getHttpStatus()).body(problemDetail);
 
   }
 
@@ -43,15 +43,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   protected ResponseEntity<Object> handleTypeMismatch(
       TypeMismatchException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
 //    TODO: Talvez adicionar um message resolver para devolver uma mensagem 'amigavel'.
-    ErrorDetails errorDetails = ErrorDetails.builder()
+    ProblemDetail problemDetail = ProblemDetail.builder()
         .title("Type Mismatch")
-        .message(exception.getMessage())
+        .detail(exception.getMessage())
         .status(status.value())
         .timestamp(LocalDateTime.now())
         .path(((ServletWebRequest) request).getRequest().getRequestURI())
         .build();
 
-    return ResponseEntity.status(status).body(errorDetails);
+    return ResponseEntity.status(status).body(problemDetail);
   }
 
   @Override
@@ -61,9 +61,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining("; "));
     String errors = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining("; "));
 
-    ValidationErrorDetails errorDetails = ValidationErrorDetails.builder()
+    ValidationProblemDetail errorDetails = ValidationProblemDetail.builder()
         .title("Bad Request")
-        .message("Invalid field(s)")
+        .detail("Invalid field(s)")
         .status(status.value())
         .timestamp(LocalDateTime.now())
         .path(((ServletWebRequest) request).getRequest().getRequestURI())

@@ -58,7 +58,7 @@ class OfferServiceImplTest {
           .build();
 
       OfferResponse actualOfferResponse = offerService.save(offerRequest);
-      BDDMockito.verify(productServiceMock).verifyAvailability(5555555L);
+      BDDMockito.verify(productServiceMock).isAvailable(5555555L);
       BDDMockito.verify(mapperMock).toOffer(ArgumentMatchers.any());
       BDDMockito.verify(offerRepositoryMock).save(ArgumentMatchers.any());
       BDDMockito.verify(mapperMock).toOfferResponse(ArgumentMatchers.any());
@@ -82,12 +82,12 @@ class OfferServiceImplTest {
           .build();
 
       BDDMockito.doThrow(new InvalidOfferException("The specified product was not found", HttpStatus.BAD_REQUEST))
-          .when(productServiceMock).verifyAvailability(9999999L);
+          .when(productServiceMock).isAvailable(9999999L);
 
       Assertions.assertThatExceptionOfType(InvalidOfferException.class)
           .isThrownBy(() -> offerService.save(offerRequest))
           .withMessage("The specified product was not found");
-      BDDMockito.verify(productServiceMock).verifyAvailability(9999999L);
+      BDDMockito.verify(productServiceMock).isAvailable(9999999L);
     }
 
   }

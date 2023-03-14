@@ -12,8 +12,10 @@ public class ProductServiceImpl implements ProductService {
   private final ProductClient productClient;
 
   @Override
-  public void verifyAvailability(Long id) {
-    productClient.findProduct(id);
+  public boolean isAvailable(Long id) {
+    // TODO: Tratar caso o product-service esteja indisponível
+    // TODO: Adicionar verificação se o produto está disponivel.
+    return productClient.findProduct(id) == null;
   }
 
 }

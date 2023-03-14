@@ -1,6 +1,6 @@
 package com.emendes.offer.client;
 
-import com.emendes.offer.client.response.ProductResponse;
+import com.emendes.offer.dto.response.ProductResponse;
 
 public interface ProductClient {
 

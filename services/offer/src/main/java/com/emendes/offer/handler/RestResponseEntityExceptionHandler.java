@@ -1,6 +1,6 @@
 package com.emendes.offer.handler;
 
-import com.emendes.offer.dto.response.ErrorDetails;
+import com.emendes.offer.dto.response.ProblemDetail;
 import com.emendes.offer.exception.InvalidOfferException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,36 +18,36 @@ import java.time.LocalDateTime;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(InvalidOfferException.class)
-  public ResponseEntity<ErrorDetails> handleResourceNotFoundException(
+  public ResponseEntity<ProblemDetail> handleResourceNotFoundException(
       InvalidOfferException exception, HttpServletRequest request) {
 
-    ErrorDetails errorDetails = ErrorDetails.builder()
+    ProblemDetail problemDetail = ProblemDetail.builder()
         .title("Invalid offer")
-        .message(exception.getMessage())
+        .detail(exception.getMessage())
         .status(exception.getStatus().value())
         .timestamp(LocalDateTime.now())
         .path(request.getRequestURI())
         .build();
 
-    return ResponseEntity.status(exception.getStatus()).body(errorDetails);
+    return ResponseEntity.status(exception.getStatus()).body(problemDetail);
   }
 
   @ExceptionHandler(ConnectException.class)
-  public ResponseEntity<ErrorDetails> handleConnectException(
+  public ResponseEntity<ProblemDetail> handleConnectException(
       ConnectException exception, HttpServletRequest request) {
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
     log.error(exception.getMessage(), exception);
 
-    ErrorDetails errorDetails = ErrorDetails.builder()
+    ProblemDetail problemDetail = ProblemDetail.builder()
         .title("Something went wrong")
-        .message("Something went wrong, please try again later")
+        .detail("Something went wrong, please try again later")
         .status(status.value())
         .timestamp(LocalDateTime.now())
         .path(request.getRequestURI())
         .build();
 
-    return ResponseEntity.status(status).body(errorDetails);
+    return ResponseEntity.status(status).body(problemDetail);
   }
 
 }

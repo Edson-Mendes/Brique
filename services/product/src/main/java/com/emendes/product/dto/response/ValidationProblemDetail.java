@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ValidationErrorDetails extends ErrorDetails{
+public class ValidationProblemDetail extends ProblemDetail {
 
   private String fields;
   private String errors;

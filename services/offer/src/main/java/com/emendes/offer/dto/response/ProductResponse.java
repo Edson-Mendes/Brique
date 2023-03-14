@@ -1,4 +1,4 @@
-package com.emendes.offer.client.response;
+package com.emendes.offer.dto.response;
 
 import lombok.*;
 
