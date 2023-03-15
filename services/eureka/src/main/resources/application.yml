@@ -1,0 +1,12 @@
+# Port
+server:
+  port: 8761
+
+# Como esse módulo é o eureka server, não queremos que ele se registre e nem busque os registro dentro dele mesmo.
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+  instance:
+    hostname: localhost
