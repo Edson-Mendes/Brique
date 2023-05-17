@@ -4,17 +4,19 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+/**
+ * Record DTO para enviar informações do Offer para o cliente no corpo da resposta.
+ * @param id do Product
+ * @param value do Product
+ * @param status do Product
+ * @param productId do Product
+ */
 @Builder
-@EqualsAndHashCode
-public class OfferResponse {
-
-  private Long id;
-  private BigDecimal value;
-  private String status;
-  private Long productId;
+public record OfferResponse(
+    Long id,
+    BigDecimal value,
+    String status,
+    Long productId
+) {
 
 }

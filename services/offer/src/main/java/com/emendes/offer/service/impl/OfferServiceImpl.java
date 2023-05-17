@@ -27,7 +27,7 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public OfferResponse save(OfferRequest offerRequest) {
-    productService.isAvailable(offerRequest.getProductId());
+    productService.isAvailable(offerRequest.productId());
 
     Offer offer = mapper.toOffer(offerRequest);
     offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));

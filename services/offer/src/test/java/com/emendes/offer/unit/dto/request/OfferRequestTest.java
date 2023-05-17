@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -70,7 +70,7 @@ class OfferRequestTest {
 
       Assertions.assertThat(actualViolations).isNotEmpty().hasSize(1);
       Assertions.assertThat(actualViolations.stream().findFirst().get().getMessage())
-          .isEqualTo("numerical value out of range (7 digits.2 digits)");
+          .isEqualTo("value must contains max 7 integer digits and max 2 fraction digits, e.g. 290.98");
     }
 
     @ParameterizedTest

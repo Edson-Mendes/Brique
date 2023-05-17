@@ -1,6 +1,5 @@
 package com.emendes.offer.unit.mapper;
 
-import com.emendes.offer.config.bean.ModelMapperConfig;
 import com.emendes.offer.dto.request.OfferRequest;
 import com.emendes.offer.dto.response.OfferResponse;
 import com.emendes.offer.mapper.OfferMapper;
@@ -21,7 +20,7 @@ class OfferMapperImplTest {
 
   @BeforeEach
   void setUp() {
-    offerMapper = new OfferMapperImpl(new ModelMapperConfig().modelMapper());
+    offerMapper = new OfferMapperImpl();
   }
 
   @Test

@@ -4,24 +4,30 @@ import com.emendes.offer.dto.request.OfferRequest;
 import com.emendes.offer.dto.response.OfferResponse;
 import com.emendes.offer.mapper.OfferMapper;
 import com.emendes.offer.model.entity.Offer;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
+/**
+ * Implementação de OfferMapper.
+ */
 @Component
 public class OfferMapperImpl implements OfferMapper {
 
-  private final ModelMapper mapper;
-
   @Override
   public Offer toOffer(OfferRequest offerRequest) {
-    return mapper.map(offerRequest, Offer.class);
+    return Offer.builder()
+        .value(offerRequest.value())
+        .productId(offerRequest.productId())
+        .build();
   }
 
   @Override
   public OfferResponse toOfferResponse(Offer offer) {
-    return mapper.map(offer, OfferResponse.class);
+    return OfferResponse.builder()
+        .id(offer.getId())
+        .value(offer.getValue())
+        .productId(offer.getProductId())
+        .status(offer.getStatus())
+        .build();
   }
 
 }
