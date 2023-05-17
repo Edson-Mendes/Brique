@@ -29,10 +29,6 @@ spring:
     console:
       enabled: true
 
-  # Flyway
-  flyway:
-    enabled: false
-
 # log
 logging:
   level:
