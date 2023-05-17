@@ -44,11 +44,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
   @Override
   protected ResponseEntity<Object> handleTypeMismatch(
-      @NonNull TypeMismatchException ex,
-      @NonNull HttpHeaders headers,
-      @NonNull HttpStatusCode status,
-      @NonNull WebRequest request) {
-
+      @NonNull TypeMismatchException ex, @NonNull HttpHeaders headers,
+      @NonNull HttpStatusCode status, @NonNull WebRequest request) {
     HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(httpStatus, ex.getMessage());
 
@@ -60,9 +57,9 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ProblemDetail> handleResourceNotFoundException(
-      ResourceNotFoundException exception, HttpServletRequest request) {
+      ResourceNotFoundException exception) {
 
-    HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+    HttpStatus httpStatus = HttpStatus.NOT_FOUND;
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(httpStatus, exception.getMessage());
 
     problemDetail.setType(URI.create("https://github.com/Edson-Mendes/brique/problem-detail#resource-not-found"));

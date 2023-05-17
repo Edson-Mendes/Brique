@@ -103,12 +103,12 @@ class ProductControllerTest {
           """;
       mockMvc.perform(post(PRODUCT_BASE_URI).contentType(MediaType.APPLICATION_JSON).content(requestBody))
           .andExpect(MockMvcResultMatchers.status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Bad Request"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid field(s)"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Invalid field(s)"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.detail").value("Some fields are invalid"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.fields").value("description"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.errors")
+          .andExpect(MockMvcResultMatchers.jsonPath("$.messages")
               .value("description must not be null or blank"));
     }
 
@@ -139,7 +139,7 @@ class ProductControllerTest {
           .andExpect(MockMvcResultMatchers.status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Type Mismatch"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/100o"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/100o"));
     }
 
     @Test
@@ -151,10 +151,10 @@ class ProductControllerTest {
       mockMvc.perform(get(PRODUCT_BASE_URI + "/9999"))
           .andExpect(MockMvcResultMatchers.status().isNotFound())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Resource not found"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+          .andExpect(MockMvcResultMatchers.jsonPath("$.detail")
               .value("Product not found for id 9999"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(404))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/9999"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/9999"));
     }
 
   }
@@ -201,7 +201,7 @@ class ProductControllerTest {
           .andExpect(MockMvcResultMatchers.status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Type Mismatch"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/100o"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/100o"));
     }
 
     @Test
@@ -217,12 +217,12 @@ class ProductControllerTest {
 
       mockMvc.perform(put(PRODUCT_BASE_URI + "/1000").contentType(MediaType.APPLICATION_JSON).content(requestBody))
           .andExpect(MockMvcResultMatchers.status().isBadRequest())
-          .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Bad Request"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid field(s)"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Invalid field(s)"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.detail").value("Some fields are invalid"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/1000"))
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/1000"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.fields").value("description"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.errors")
+          .andExpect(MockMvcResultMatchers.jsonPath("$.messages")
               .value("description must not be null or blank"));
     }
 
@@ -244,10 +244,10 @@ class ProductControllerTest {
       mockMvc.perform(put(PRODUCT_BASE_URI + "/9999").contentType(MediaType.APPLICATION_JSON).content(requestBody))
           .andExpect(MockMvcResultMatchers.status().isNotFound())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Resource not found"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+          .andExpect(MockMvcResultMatchers.jsonPath("$.detail")
               .value("Product not found for id 9999"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(404))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/9999"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/9999"));
     }
 
   }
@@ -270,7 +270,7 @@ class ProductControllerTest {
           .andExpect(MockMvcResultMatchers.status().isBadRequest())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Type Mismatch"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/100o"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/100o"));
     }
 
     @Test
@@ -282,10 +282,10 @@ class ProductControllerTest {
       mockMvc.perform(delete(PRODUCT_BASE_URI + "/9999"))
           .andExpect(MockMvcResultMatchers.status().isNotFound())
           .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Resource not found"))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+          .andExpect(MockMvcResultMatchers.jsonPath("$.detail")
               .value("Product not found for id 9999"))
           .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(404))
-          .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/api/products/9999"));
+          .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/products/9999"));
     }
 
   }

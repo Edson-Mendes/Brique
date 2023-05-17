@@ -259,7 +259,7 @@ class ProductRequestTest {
 
       Assertions.assertThat(actualViolations).isNotEmpty().hasSize(1);
       Assertions.assertThat(actualViolations.stream().findFirst().get().getMessage())
-          .isEqualTo("numerical value out of range (7 digits.2 digits)");
+          .isEqualTo("price must contains max 7 integer digits and max 2 fraction digits, e.g. 290.98");
     }
 
   }

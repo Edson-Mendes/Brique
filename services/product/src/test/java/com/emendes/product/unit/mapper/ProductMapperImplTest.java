@@ -1,9 +1,7 @@
 package com.emendes.product.unit.mapper;
 
-import com.emendes.product.config.bean.ModelMapperConfig;
 import com.emendes.product.dto.request.ProductRequest;
 import com.emendes.product.dto.response.ProductResponse;
-import com.emendes.product.mapper.ProductMapper;
 import com.emendes.product.mapper.impl.ProductMapperImpl;
 import com.emendes.product.model.entity.Product;
 import org.assertj.core.api.Assertions;
@@ -17,11 +15,11 @@ import java.time.LocalDateTime;
 @DisplayName("Unit tests for ProductMapperImpl")
 class ProductMapperImplTest {
 
-  private ProductMapper productMapper;
+  private ProductMapperImpl productMapper;
 
   @BeforeEach
   void setUp() {
-    productMapper = new ProductMapperImpl(new ModelMapperConfig().modelMapper());
+    productMapper = new ProductMapperImpl();
   }
 
   @Test
@@ -33,7 +31,7 @@ class ProductMapperImplTest {
         .description("description lorem ipsum")
         .price(new BigDecimal("250.00"))
         .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
-      .build();
+        .build();
 
     ProductResponse actualProductResponse = productMapper.toProductResponse(productToBeMapped);
     ProductResponse expectedProductResponse = ProductResponse.builder()

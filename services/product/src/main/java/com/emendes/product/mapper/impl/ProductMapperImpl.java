@@ -4,29 +4,38 @@ import com.emendes.product.dto.request.ProductRequest;
 import com.emendes.product.dto.response.ProductResponse;
 import com.emendes.product.mapper.ProductMapper;
 import com.emendes.product.model.entity.Product;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
+/**
+ * Implementação de ProductMapper.
+ */
 @Component
 public class ProductMapperImpl implements ProductMapper {
 
-  private final ModelMapper mapper;
-
   @Override
   public ProductResponse toProductResponse(Product product) {
-    return mapper.map(product, ProductResponse.class);
+    return ProductResponse.builder()
+        .id(product.getId())
+        .name(product.getName())
+        .description(product.getDescription())
+        .price(product.getPrice())
+        .build();
   }
 
   @Override
   public Product toProduct(ProductRequest productRequest) {
-    return mapper.map(productRequest, Product.class);
+    return Product.builder()
+        .name(productRequest.name())
+        .description(productRequest.description())
+        .price(productRequest.price())
+        .build();
   }
 
   @Override
   public void merge(ProductRequest source, Product destination) {
-    mapper.map(source, destination);
+    destination.setName(source.name());
+    destination.setDescription(source.description());
+    destination.setPrice(source.price());
   }
 
 }
