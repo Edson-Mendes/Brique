@@ -44,3 +44,6 @@ spring:
         uri: lb://product-service
         predicates:
         - Path=/api/products/**
+
+  application:
+    name: api-gateway

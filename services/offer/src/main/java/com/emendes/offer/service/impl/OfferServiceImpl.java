@@ -37,8 +37,8 @@ public class OfferServiceImpl implements OfferService {
     offer.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     offer.setStatus("WAITING");
 
-    offerRepository.save(offer);
-
+//    offerRepository.save(offer);
+    offer.setId(6_666L);
     log.info("offer with id {} was saved", offer.getId());
     // TODO: Enviar uma notificação ao dono do produto informando que ele recebeu uma oferta pelo produto
 

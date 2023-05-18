@@ -1,6 +1,6 @@
 # port
 server:
-  port: 8580
+  port: ${PORT:8580}
 
 spring:
   application:
@@ -8,21 +8,19 @@ spring:
 
   # datasource
   datasource:
-    url: jdbc:h2:mem:product-db
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/brique-product-db
+    username: user
+    password: 1234
 
   # jpa
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
 
   # H2
   h2:
