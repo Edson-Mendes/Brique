@@ -1,3 +1,0 @@
-Arquivo para guardar minhas ideias sobre o projeto.
-- Adicionar um status para o produto, tipo sold, for_sale, canceled, deleted.
-- Adicionar Circuit Breaker para tratar caso o product-service esteja off.

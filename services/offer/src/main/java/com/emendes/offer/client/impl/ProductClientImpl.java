@@ -14,14 +14,20 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Implementação de {@link ProductClient}
+ */
 @RequiredArgsConstructor
 @Component
 public class ProductClientImpl implements ProductClient {
 
   private final WebClient client;
 
+  /**
+   * @throws InvalidOfferException se o id informado não pertence a nenhum Product.
+   */
   @Override
-  public ProductResponse findProduct(Long id) {
+  public ProductResponse findProductById(Long id) {
     URI uri = URI.create("http://localhost:8580/api/products/" + id);
 
     Mono<ProductResponse> response = client.get().uri(uri)

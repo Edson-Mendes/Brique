@@ -23,6 +23,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import static com.emendes.offer.util.faker.OfferFaker.*;
+import static com.emendes.offer.util.faker.ProductFaker.productResponse;
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(SpringExtension.class)
 @DisplayName("Unit tests for OfferServiceImpl")
 class OfferServiceImplTest {
@@ -43,34 +47,28 @@ class OfferServiceImplTest {
     @Test
     @DisplayName("save must return OfferResponse when save successfully")
     void save_MustReturnOfferResponse_WhenSaveSuccessfully() {
-      Offer offerWithoutIdAndCreatedAt = Offer.builder()
-          .value(new BigDecimal("250.00"))
-          .status("WAITING")
-          .productId(5555555L)
-          .build();
-      BDDMockito.when(mapperMock.toOffer(ArgumentMatchers.any())).thenReturn(offerWithoutIdAndCreatedAt);
-      BDDMockito.when(offerRepositoryMock.save(ArgumentMatchers.any())).thenReturn(offer());
-      BDDMockito.when(mapperMock.toOfferResponse(ArgumentMatchers.any())).thenReturn(offerResponse());
+      BDDMockito.when(productServiceMock.findAvailableProductById(any())).thenReturn(productResponse());
+      BDDMockito.when(mapperMock.toOffer(any())).thenReturn(offerWithoutIdAndCreatedAt());
+      BDDMockito.when(offerRepositoryMock.save(any())).thenReturn(offer());
+      BDDMockito.when(mapperMock.toOfferResponse(any(), any())).thenReturn(offerResponse());
 
       OfferRequest offerRequest = OfferRequest.builder()
           .value(new BigDecimal("250.00"))
-          .productId(5555555L)
+          .productId(5_555_555L)
           .build();
 
-      OfferResponse actualOfferResponse = offerService.save(offerRequest);
-      BDDMockito.verify(productServiceMock).isAvailable(5555555L);
-      BDDMockito.verify(mapperMock).toOffer(ArgumentMatchers.any());
-      BDDMockito.verify(offerRepositoryMock).save(ArgumentMatchers.any());
-      BDDMockito.verify(mapperMock).toOfferResponse(ArgumentMatchers.any());
+      OfferResponse actualOfferResponse = offerService.makeOffer(offerRequest);
 
-      OfferResponse expectedOfferResponse = OfferResponse.builder()
-          .id(100000L)
-          .value(new BigDecimal("250.00"))
-          .status("WAITING")
-          .productId(5555555L)
-          .build();
+      BDDMockito.verify(productServiceMock).findAvailableProductById(any());
+      BDDMockito.verify(mapperMock).toOffer(any());
+      BDDMockito.verify(offerRepositoryMock).save(any());
+      BDDMockito.verify(mapperMock).toOfferResponse(any(), any());
 
-      Assertions.assertThat(actualOfferResponse).isNotNull().isEqualTo(expectedOfferResponse);
+      Assertions.assertThat(actualOfferResponse).isNotNull();
+      Assertions.assertThat(actualOfferResponse.id()).isNotNull().isEqualTo(100_000L);
+      Assertions.assertThat(actualOfferResponse.status()).isNotNull().isEqualTo("WAITING");
+      Assertions.assertThat(actualOfferResponse.value()).isNotNull().isEqualTo("250.00");
+      Assertions.assertThat(actualOfferResponse.product().id()).isNotNull().isEqualTo(5_555_555L);
     }
 
     @Test
@@ -82,32 +80,15 @@ class OfferServiceImplTest {
           .build();
 
       BDDMockito.doThrow(new InvalidOfferException("The specified product was not found", HttpStatus.BAD_REQUEST))
-          .when(productServiceMock).isAvailable(9999999L);
+          .when(productServiceMock).findAvailableProductById(9_999_999L);
 
       Assertions.assertThatExceptionOfType(InvalidOfferException.class)
-          .isThrownBy(() -> offerService.save(offerRequest))
+          .isThrownBy(() -> offerService.makeOffer(offerRequest))
           .withMessage("The specified product was not found");
-      BDDMockito.verify(productServiceMock).isAvailable(9999999L);
+
+      BDDMockito.verify(productServiceMock).findAvailableProductById(9_999_999L);
     }
 
-  }
-
-  private OfferResponse offerResponse() {
-    return OfferResponse.builder()
-        .id(100000L)
-        .value(new BigDecimal("250.00"))
-        .status("WAITING")
-        .productId(5555555L)
-        .build();
-  }
-
-  private Offer offer() {
-    return Offer.builder()
-        .id(100000L)
-        .value(new BigDecimal("250.00"))
-        .status("WAITING")
-        .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
-        .build();
   }
 
 }

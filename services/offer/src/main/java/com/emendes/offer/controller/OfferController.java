@@ -19,7 +19,7 @@ public class OfferController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public OfferResponse makeOffer(@RequestBody @Valid OfferRequest offerRequest) {
-    return offerService.save(offerRequest);
+    return offerService.makeOffer(offerRequest);
   }
 
 }

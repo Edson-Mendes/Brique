@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entidade JPA Offer, refere-se a tabela t_offer no banco de dados.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

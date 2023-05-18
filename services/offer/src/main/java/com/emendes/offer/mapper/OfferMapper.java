@@ -2,6 +2,7 @@ package com.emendes.offer.mapper;
 
 import com.emendes.offer.dto.request.OfferRequest;
 import com.emendes.offer.dto.response.OfferResponse;
+import com.emendes.offer.dto.response.ProductResponse;
 import com.emendes.offer.model.entity.Offer;
 
 /**
@@ -11,6 +12,7 @@ public interface OfferMapper {
 
   /**
    * Mapeia o DTO OfferRequest para a entidade Offer.
+   *
    * @param offerRequest que deve ser mapeado para Offer
    * @return Offer com dados vindo de offerRequest.
    */
@@ -18,8 +20,10 @@ public interface OfferMapper {
 
   /**
    * Mapeia uma entidade Offer para o DTO OfferResponse.
+   *
    * @param offer que deve ser mapeado para OfferResponse
    * @return OfferResponse com as informações necessárias de Offer.
    */
-  OfferResponse toOfferResponse(Offer offer);
+  OfferResponse toOfferResponse(Offer offer, ProductResponse productResponse);
+
 }
