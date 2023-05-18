@@ -8,6 +8,11 @@ import com.emendes.offer.dto.response.OfferResponse;
  */
 public interface OfferService {
 
+  /**
+   * Regras de negócio para fazer uma Offer.
+   * @param offerRequest contendo os dados da Offer.
+   * @return OfferResponse contendo os dados da Offer criada.
+   */
   OfferResponse makeOffer(OfferRequest offerRequest);
 
 }

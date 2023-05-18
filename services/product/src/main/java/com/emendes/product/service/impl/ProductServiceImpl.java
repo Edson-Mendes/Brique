@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Implementação de {@link ProductService}
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -45,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public ProductResponse find(Long id) {
+    log.info("Searching for product with id : {}", id);
     return mapper.toProductResponse(findById(id));
   }
 
