@@ -49,7 +49,7 @@ class OfferMapperImplTest {
         .id(100_000L)
         .value(new BigDecimal("250.00"))
         .status("WAITING")
-        .productId(999L)
+        .productId(5_555_555L)
         .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
         .build();
 
@@ -70,6 +70,29 @@ class OfferMapperImplTest {
     Assertions.assertThat(actualOfferResponse.product().name()).isNotNull().isEqualTo("Product XPTO");
     Assertions.assertThat(actualOfferResponse.product().description()).isNotNull().isEqualTo("Description XPTO");
     Assertions.assertThat(actualOfferResponse.product().price()).isNotNull().isEqualTo("350.00");
+  }
+
+  @Test
+  @DisplayName("toOfferResponse must return OfferResponse when map successfully with only Offer")
+  void toOfferResponse_MustReturnOfferResponse_WhenMapSuccessfullyWithOnlyOffer() {
+    Offer offerToBeMapped = Offer.builder()
+        .id(100_000L)
+        .value(new BigDecimal("250.00"))
+        .status("WAITING")
+        .productId(5_555_555L)
+        .createdAt(LocalDateTime.parse("2022-12-10T10:00:00"))
+        .build();
+
+    OfferResponse actualOfferResponse = offerMapper.toOfferResponse(offerToBeMapped);
+
+    Assertions.assertThat(actualOfferResponse).isNotNull();
+    Assertions.assertThat(actualOfferResponse.id()).isNotNull().isEqualTo(100_000L);
+    Assertions.assertThat(actualOfferResponse.value()).isNotNull().isEqualTo("250.00");
+    Assertions.assertThat(actualOfferResponse.status()).isNotNull().isEqualTo("WAITING");
+    Assertions.assertThat(actualOfferResponse.product().id()).isNotNull().isEqualTo(5_555_555L);
+    Assertions.assertThat(actualOfferResponse.product().name()).isNull();
+    Assertions.assertThat(actualOfferResponse.product().description()).isNull();
+    Assertions.assertThat(actualOfferResponse.product().price()).isNull();
   }
 
 }

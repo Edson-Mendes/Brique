@@ -2,10 +2,14 @@ package com.emendes.offer.util.faker;
 
 import com.emendes.offer.dto.response.OfferResponse;
 import com.emendes.offer.model.entity.Offer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import static com.emendes.offer.util.ConstantsUtil.PAGEABLE_DEFAULT;
 import static com.emendes.offer.util.faker.ProductFaker.productResponse;
 
 public class OfferFaker {
@@ -45,6 +49,14 @@ public class OfferFaker {
         .status("WAITING")
         .product(productResponse())
         .build();
+  }
+
+  /**
+   * Fornece uma instância de Page<OfferResponse> para uso em testes automatizados.
+   * @return
+   */
+  public static Page<Offer> offerPage() {
+    return new PageImpl<>(List.of(offer()), PAGEABLE_DEFAULT, 1);
   }
 
 }
