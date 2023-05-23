@@ -20,6 +20,7 @@
     <module>services/offer</module>
     <module>services/eureka</module>
     <module>services/gateway</module>
+      <module>services/user</module>
   </modules>
 
   <properties>
