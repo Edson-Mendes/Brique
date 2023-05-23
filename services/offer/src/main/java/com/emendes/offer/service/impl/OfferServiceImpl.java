@@ -10,6 +10,8 @@ import com.emendes.offer.service.OfferService;
 import com.emendes.offer.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,14 @@ public class OfferServiceImpl implements OfferService {
     // TODO: Enviar uma notificação ao dono do produto informando que ele recebeu uma oferta pelo produto
 
     return offerMapper.toOfferResponse(offer, productResponse);
+  }
+
+  @Override
+  public Page<OfferResponse> fetchAll(Pageable pageable) {
+    Page<Offer> offerPage = offerRepository.findAll(pageable);
+    log.info("Fetching page : {} and size {} of Offer", pageable.getPageNumber(), pageable.getPageSize());
+
+    return offerPage.map(offerMapper::toOfferResponse);
   }
 
 }

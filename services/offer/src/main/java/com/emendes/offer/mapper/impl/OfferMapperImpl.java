@@ -31,4 +31,18 @@ public class OfferMapperImpl implements OfferMapper {
         .build();
   }
 
+  @Override
+  public OfferResponse toOfferResponse(Offer offer) {
+    ProductResponse productResponse = ProductResponse.builder()
+        .id(offer.getProductId())
+        .build();
+
+    return OfferResponse.builder()
+        .id(offer.getId())
+        .value(offer.getValue())
+        .status(offer.getStatus())
+        .product(productResponse)
+        .build();
+  }
+
 }

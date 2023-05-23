@@ -1,0 +1,6 @@
+INSERT INTO "t_offer" ("value", "status", "product_id", "created_at") VALUES
+(100.00, 'WAITING', 1, '2023-05-25T10:00:00'),
+(120.00, 'WAITING', 1, '2023-05-26T09:00:00'),
+(160.00, 'WAITING', 1, '2023-05-26T12:00:00'),
+(170.00, 'WAITING', 1, '2023-05-26T15:00:00'),
+(190.00, 'WAITING', 1, '2023-05-27T09:00:00');

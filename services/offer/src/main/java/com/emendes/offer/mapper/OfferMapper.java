@@ -22,8 +22,17 @@ public interface OfferMapper {
    * Mapeia uma entidade Offer para o DTO OfferResponse.
    *
    * @param offer que deve ser mapeado para OfferResponse
+   * @param productResponse contendo as informações do produto relacionado com a oferta.
    * @return OfferResponse com as informações necessárias de Offer.
    */
   OfferResponse toOfferResponse(Offer offer, ProductResponse productResponse);
+
+  /**
+   * Mapeia uma entidade Offer para o DTO OfferResponse.
+   *
+   * @param offer que deve ser mapeado para OfferResponse
+   * @return OfferResponse com as informações necessárias de Offer.
+   */
+  OfferResponse toOfferResponse(Offer offer);
 
 }
