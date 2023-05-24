@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    container_name: user-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: brique-user-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - user-volume:/var/lib/postgresql/data
+
+volumes:
+  user-volume:

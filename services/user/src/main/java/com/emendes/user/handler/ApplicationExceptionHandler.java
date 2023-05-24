@@ -1,12 +1,10 @@
-package com.emendes.product.handler;
+package com.emendes.user.handler;
 
-import com.emendes.product.exception.ResourceNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.*;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -52,20 +50,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     problemDetail.setTitle("Type Mismatch");
 
     return ResponseEntity.status(httpStatus).body(problemDetail);
-  }
-
-  @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<ProblemDetail> handleResourceNotFoundException(
-      ResourceNotFoundException exception) {
-
-    HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(httpStatus, exception.getMessage());
-
-    problemDetail.setType(URI.create("https://github.com/Edson-Mendes/brique/problem-detail#resource-not-found"));
-    problemDetail.setTitle("Resource not found");
-
-    return ResponseEntity.status(exception.getHttpStatus()).body(problemDetail);
-
   }
 
 }

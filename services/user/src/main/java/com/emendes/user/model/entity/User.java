@@ -1,5 +1,6 @@
 package com.emendes.user.model.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 /**
@@ -10,11 +11,16 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@Entity
+@Table(name = "t_user")
 public class User {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Column(length = 100)
   private String name;
-  // TODO: Deve ser unique
+  @Column(length = 150, unique = true)
   private String email;
   private String password;
 
