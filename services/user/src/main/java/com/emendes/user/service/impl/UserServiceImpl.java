@@ -8,8 +8,11 @@ import com.emendes.user.repository.UserRepository;
 import com.emendes.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Implementação de {@link UserService}
@@ -25,10 +28,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResponse register(CreateUserRequest createUserRequest) {
+    log.info("attempt to register user with email: {}", createUserRequest.email());
     User user = userMapper.toUser(createUserRequest);
 
     user.setPassword(passwordEncoder.encode(createUserRequest.password()));
-    userRepository.save(user);
+    user.setAuthorities("ROLE_USER");
+
+    try {
+      userRepository.save(user);
+    } catch (DataIntegrityViolationException exception) {
+      log.info("fail to persist user! exception message: {}", exception.getMessage());
+      throw new ResponseStatusException(
+          HttpStatusCode.valueOf(400), String.format("Email {%s} already in use", user.getEmail()));
+    }
     log.info("successfully registered user with id: {}", user.getId());
 
     return userMapper.toUserResponse(user);
