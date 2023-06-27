@@ -1,9 +1,11 @@
 package com.emendes.user.service.impl;
 
+import com.emendes.user.dto.event.CreateUserEvent;
 import com.emendes.user.dto.request.CreateUserRequest;
 import com.emendes.user.dto.response.UserResponse;
 import com.emendes.user.mapper.UserMapper;
 import com.emendes.user.model.entity.User;
+import com.emendes.user.producer.CreateUserProducer;
 import com.emendes.user.repository.UserRepository;
 import com.emendes.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final CreateUserProducer createUserProducer;
 
   @Override
   public UserResponse register(CreateUserRequest createUserRequest) {
@@ -42,6 +45,13 @@ public class UserServiceImpl implements UserService {
           HttpStatusCode.valueOf(400), String.format("Email {%s} already in use", user.getEmail()));
     }
     log.info("successfully registered user with id: {}", user.getId());
+
+    CreateUserEvent createUserEvent = CreateUserEvent.builder()
+        .username(user.getEmail())
+        .password(user.getPassword())
+        .authorities(user.getAuthorities())
+        .build();
+    createUserProducer.sendMessage(createUserEvent);
 
     return userMapper.toUserResponse(user);
   }
