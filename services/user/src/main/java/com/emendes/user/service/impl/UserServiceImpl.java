@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
     }
     log.info("successfully registered user with id: {}", user.getId());
 
+    // TODO: Criar um mapper para o objeto abaixo.
     CreateUserEvent createUserEvent = CreateUserEvent.builder()
         .username(user.getEmail())
         .password(user.getPassword())

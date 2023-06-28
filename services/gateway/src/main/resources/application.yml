@@ -45,12 +45,29 @@ spring:
         uri: lb://product-service
         predicates:
         - Path=/api/products/**
+# User service route
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/api/users/**
 
   application:
     name: api-gateway
 
   main:
     allow-bean-definition-overriding: true
+
+    # Kafka
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.emendes.gateway.dto.event.CreateUserEvent
 
 # JWT
 brique:

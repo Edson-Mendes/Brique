@@ -23,7 +23,7 @@ public class SecurityConfig {
   private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
   private static final String[] EUREKA_WHITELIST = {"/eureka/web", "/eureka/**", "/favicon.ico"};
-  private static final String[] POST_WHITELIST = {"/api/auth"};
+  private static final String[] POST_WHITELIST = {"/api/auth", "/api/users"};
 
   @Bean
   public SecurityWebFilterChain securityWebFilterChain(
