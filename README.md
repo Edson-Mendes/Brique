@@ -15,8 +15,10 @@ Estou desenvolvendo este projeto com a finalidade de estudar/praticar arquitetur
 <a href="https://pt.wikipedia.org/wiki/Java_(linguagem_de_programa%C3%A7%C3%A3o)" target="_blank"><img src="https://img.shields.io/badge/java%2017-D32323.svg?&style=for-the-badge&logo=java&logoColor=white" target="_blank"></a>
 
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/badge/Springboot-6db33f.svg?&style=for-the-badge&logo=springboot&logoColor=white" target="_blank"></a>
-<a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/badge/Spring%20Cloud-6db33f.svg?&style=for-the-badge&logo=spring&logoColor=white" target="_blank"></a>
+<a href="https://spring.io/projects/spring-cloud-gateway" target="_blank"><img src="https://img.shields.io/badge/Spring%20Cloud%20Gateway-6db33f.svg?&style=for-the-badge&logo=spring&logoColor=white" target="_blank"></a>
+<a href="https://spring.io/projects/spring-cloud-netflix" target="_blank"><img src="https://img.shields.io/badge/Spring%20Cloud%20Netflix-6db33f.svg?&style=for-the-badge&logo=spring&logoColor=white" target="_blank"></a>
 <a href="https://spring.io/projects/spring-data-jpa" target="_blank"><img src="https://img.shields.io/badge/Spring%20Data%20jpa-6db33f.svg?&style=for-the-badge&logo=spring&logoColor=white" target="_blank"></a>
+<a href="https://spring.io/projects/spring-data-r2dbc" target="_blank"><img src="https://img.shields.io/badge/Spring%20Data%20r2dbc-6db33f.svg?&style=for-the-badge&logo=spring&logoColor=white" target="_blank"></a>
 <a href="https://spring.io/projects/spring-security" target="_blank"><img src="https://img.shields.io/badge/Spring%20Security-6DB33F.svg?&style=for-the-badge&logo=springsecurity&logoColor=white" target="_blank"></a>
 
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Apache%20Maven-b8062e.svg?&style=for-the-badge&logo=apachemaven&logoColor=white" target="_blank"></a>

@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
 
     try {
       userRepository.save(user);
-      log.info("Persisting user [name: {}, email: {}, authorities: {}]", user.getName(), user.getEmail(), user.getAuthorities());
     } catch (DataIntegrityViolationException exception) {
       log.info("fail to persist user! exception message: {}", exception.getMessage());
       throw new ResponseStatusException(
