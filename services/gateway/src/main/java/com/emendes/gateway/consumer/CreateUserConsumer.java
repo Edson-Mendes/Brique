@@ -28,7 +28,8 @@ public class CreateUserConsumer {
   @KafkaListener(topics = {CREATE_USER_TOPIC}, groupId = GATEWAY_CREATE_USER_GROUP)
   public void handleUserCreation(CreateUserEvent createUserEvent) {
     log.info("consuming message with username: {}", createUserEvent.username());
-    userService.save(createUserEvent);
+    userService.save(createUserEvent)
+        .subscribe(u -> log.info("user with id : {} successful saved", u.getId()));
   }
 
 }

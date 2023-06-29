@@ -17,6 +17,7 @@ logging:
             route:
               RouteDefinitionLocator: INFO
         security: DEBUG
+        r2dbc: DEBUG
 
 # Gateway routes
 spring:
@@ -72,6 +73,17 @@ spring:
           json:
             type:
               mapping: event:com.emendes.gateway.dto.event.CreateUserEvent
+
+  # datasource
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5434/brique-gateway-db
+    username: user
+    password: 1234
+
+  sql:
+    init:
+      mode: always
+      platform: postgres
 
 # JWT
 brique:
