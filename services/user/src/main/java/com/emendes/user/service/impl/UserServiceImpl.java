@@ -38,7 +38,9 @@ public class UserServiceImpl implements UserService {
     user.setAuthorities("ROLE_USER");
 
     try {
-      userRepository.save(user);
+      // TODO: Descomentar quando for pra persistir no banco de dados.
+//      userRepository.save(user);
+      log.info("Persisting user [name: {}, email: {}, authorities: {}]", user.getName(), user.getEmail(), user.getAuthorities());
     } catch (DataIntegrityViolationException exception) {
       log.info("fail to persist user! exception message: {}", exception.getMessage());
       throw new ResponseStatusException(

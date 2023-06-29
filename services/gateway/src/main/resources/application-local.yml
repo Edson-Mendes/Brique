@@ -1,0 +1,80 @@
+# Eureka
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# Log
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        cloud:
+          gateway:
+            route:
+              RouteDefinitionLocator: INFO
+        security: DEBUG
+
+# Gateway routes
+spring:
+  cloud:
+    gateway:
+      routes:
+# Eureka server route
+      - id: eureka-server
+        uri: http://localhost:8761
+        predicates:
+        - Path=/eureka/web
+        filters:
+        - SetPath=/
+# Eureka server static resources route
+      - id: eureka-server-static-resources
+        uri: http://localhost:8761
+        predicates:
+        - Path=/eureka/**
+# Offer service route
+      - id: offer-service
+        uri: lb://offer-service
+        predicates:
+        - Path=/api/offers/**
+# Product service route
+      - id: product-service
+        uri: lb://product-service
+        predicates:
+        - Path=/api/products/**
+# User service route
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/api/users/**
+
+    # Disable discovery
+    discovery:
+      enabled: false
+
+  application:
+    name: api-gateway
+
+  main:
+    allow-bean-definition-overriding: true
+
+    # Kafka
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.emendes.gateway.dto.event.CreateUserEvent
+
+# JWT
+brique:
+  jwt:
+    expiration: ${JWT_EXPIRATION:86400000}
+    secret: ${JWT_SECRET:12341234123412341234123412341234}
